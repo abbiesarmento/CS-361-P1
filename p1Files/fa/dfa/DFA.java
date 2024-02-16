@@ -46,7 +46,7 @@ public class DFA implements DFAInterface{
 
     @Override
     public boolean setStart(String name) {
-        if(startState.getName().equals(name) && !states.contains(name))
+        if(startState.getName() == null && !states.contains(name))
             return false;
         DFAState newState = new DFAState(name);
         startState = newState;
