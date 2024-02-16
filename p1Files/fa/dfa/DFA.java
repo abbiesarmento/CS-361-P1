@@ -130,7 +130,7 @@ public class DFA implements DFAInterface{
         boolean fromStateBool = false;
         boolean toStateBool = false;
         boolean onSymbBool = false;
-        Object stateArray[] = states.toArray(); 
+        Object stateArray[] = states.toArray();
         for(int i = 0; i < stateArray.length; i++){
             if(((DFAState) stateArray[i]).getName().equals(fromState)){
                 fromStateBool = true;
@@ -145,13 +145,22 @@ public class DFA implements DFAInterface{
             onSymbBool = true;
         }
         if(fromStateBool && toStateBool && onSymbBool == true){
-            HashMap<Character, String> deltaRow = new HashMap<Character, String>();
-            deltaRow.put(onSymb, toState);
-            delta.put(fromState, deltaRow);
-            System.out.println(delta);
+//            HashMap<Character, String> deltaRow = new HashMap<Character, String>();
+//            deltaRow.put(onSymb, toState);
+//            delta.put(fromState, deltaRow);
+//            System.out.println(delta);
+//            return true;
+            delta.putIfAbsent(fromState, new HashMap<>());
+            delta.get(fromState).put(onSymb, toState);
             return true;
         }
         return false;
+//        if (!states.contains(fromState) || !states.contains(toState) || !sigma.contains(onSymb)) {
+//            return false;
+//        }
+//        delta.putIfAbsent(fromState, new HashMap<>());
+//        delta.get(fromState).put(onSymb, toState);
+//        return true;
     }
 
     @Override
