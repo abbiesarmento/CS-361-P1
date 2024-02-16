@@ -34,7 +34,6 @@ public class DFA implements DFAInterface{
         }
         DFAState newState = new DFAState(name);
         states.add(newState);
-        System.out.println(states);
         return true;
     }
 
@@ -74,6 +73,19 @@ public class DFA implements DFAInterface{
 
     @Override
     public boolean accepts(String s) {
+        // searches hash map
+        // if it's isFinal() at the end of the symbol searches, then it passes. 
+        char[] arrOfSymb = s.toCharArray();
+        String start = startState.getName();
+        for(int i = 0; i < arrOfSymb.length; i++){
+            if(start == null || delta.get(start).get(arrOfSymb[i]) == null){
+                return false;
+            }
+            start = delta.get(start).get(arrOfSymb[i]);
+        }
+        if(isFinal(start)){
+            return true;
+        }
         return false;
     }
 
@@ -84,17 +96,23 @@ public class DFA implements DFAInterface{
 
     @Override
     public State getState(String name) {
-        if(!states.contains(name)){
-            return null;
+        Object stateArray[] = states.toArray(); 
+        for(int i = 0; i < stateArray.length; i++){
+            if(((DFAState) stateArray[i]).getName().equals(name)){
+                DFAState state = new DFAState(name);
+                return state;
+            }
         }
-        DFAState state = new DFAState(name);
-        return state;
+        return null;
     }
 
     @Override
     public boolean isFinal(String name) {
-        if(finalState.contains(name)){
-            return true;
+        Object stateArray[] = finalState.toArray(); 
+        for(int i = 0; i < stateArray.length; i++){
+            if(((DFAState) stateArray[i]).getName().equals(name)){
+                return true;
+            }
         }
         return false;
     }
@@ -130,6 +148,7 @@ public class DFA implements DFAInterface{
             HashMap<Character, String> deltaRow = new HashMap<Character, String>();
             deltaRow.put(onSymb, toState);
             delta.put(fromState, deltaRow);
+            System.out.println(delta);
             return true;
         }
         return false;
