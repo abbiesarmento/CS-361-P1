@@ -9,17 +9,17 @@ import java.util.Set;
 public class DFA implements DFAInterface{
 
     private HashSet<Character> sigma;
-    private  State startState;
-    private HashSet<State> finalState;
-    private HashSet<State> states;
-    private HashMap<State, Character> delta;
+    private DFAState startState;
+    private HashSet<DFAState> finalState;
+    private HashSet<DFAState> states;
+    private HashMap<String, HashMap> delta;
 
     public DFA (){
         sigma = new HashSet<Character>();
         startState = new DFAState();
-        finalState = new HashSet<State>();
-        states = new HashSet<State>();
-        delta = new HashMap<State, Character>();
+        finalState = new HashSet<DFAState>();
+        states = new HashSet<DFAState>();
+        delta = new HashMap<String, HashMap>();
     }
 
 
@@ -28,10 +28,11 @@ public class DFA implements DFAInterface{
     public boolean addState(String name) {
         if(states.contains(name)){
             return false;
+        }else {
+            DFAState newState = new DFAState(name);
+            states.add(newState);
+            return true;
         }
-        DFAState newState = new DFAState(name);
-        states.add(newState);
-        return true;
     }
 
     @Override
@@ -98,6 +99,9 @@ public class DFA implements DFAInterface{
 
     @Override
     public boolean addTransition(String fromState, String toState, char onSymb) {
+        HashMap<Character, String> deltaRow = new HashMap<Character, String>();
+        deltaRow.put(onSymb, toState); 
+        delta.put(fromState, deltaRow);
         return false;
     }
 
