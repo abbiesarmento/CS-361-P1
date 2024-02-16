@@ -14,6 +14,14 @@ public class DFA implements DFAInterface{
     private HashSet<State> states;
     private HashMap<State, Character> delta;
 
+    public DFA (){
+        sigma = new HashSet<Character>();
+        startState = new DFAState();
+        finalState = new HashSet<State>();
+        states = new HashSet<State>();
+        delta = new HashMap<State, Character>();
+    }
+
 
 
     @Override
