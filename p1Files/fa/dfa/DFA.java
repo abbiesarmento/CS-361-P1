@@ -12,46 +12,56 @@ public class DFA implements DFAInterface{
     private DFAState startState;
     private HashSet<DFAState> finalState;
     private HashSet<DFAState> states;
-    private HashMap<String, HashMap> delta;
+    private HashMap<String, HashMap<Character, String>> delta;
 
     public DFA (){
         sigma = new HashSet<Character>();
         startState = new DFAState();
         finalState = new HashSet<DFAState>();
         states = new HashSet<DFAState>();
-        delta = new HashMap<String, HashMap>();
+        delta = new HashMap<String, HashMap<Character, String>>();
     }
 
 
 
     @Override
     public boolean addState(String name) {
-        if(states.contains(name)){
-            return false;
-        }else {
-            DFAState newState = new DFAState(name);
-            states.add(newState);
-            return true;
+        Object stateArray[] = states.toArray(); 
+        for(int i = 0; i < stateArray.length; i++){
+            if(((DFAState) stateArray[i]).getName().equals(name)){
+                return false;
+            }
         }
+        DFAState newState = new DFAState(name);
+        states.add(newState);
+        System.out.println(states);
+        return true;
     }
 
     @Override
     public boolean setFinal(String name) {
-        if(finalState.contains(name) && !states.contains(name)){
-            return false;
+        Object stateArray[] = states.toArray(); 
+        for(int i = 0; i < stateArray.length; i++){
+            if(((DFAState) stateArray[i]).getName().equals(name)){
+                DFAState newState = new DFAState(name);
+                finalState.add(newState);
+                return true;
+            }
         }
-        DFAState newState = new DFAState(name);
-        finalState.add(newState);
-        return true;
+        return false;
     }
 
     @Override
     public boolean setStart(String name) {
-        if(startState.getName() == null && !states.contains(name))
-            return false;
-        DFAState newState = new DFAState(name);
-        startState = newState;
-        return true;
+        Object stateArray[] = states.toArray(); 
+        for(int i = 0; i < stateArray.length; i++){
+            if(((DFAState) stateArray[i]).getName().equals(name)){
+                DFAState newState = new DFAState(name);
+                startState = newState;
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override
@@ -99,9 +109,29 @@ public class DFA implements DFAInterface{
 
     @Override
     public boolean addTransition(String fromState, String toState, char onSymb) {
-        HashMap<Character, String> deltaRow = new HashMap<Character, String>();
-        deltaRow.put(onSymb, toState); 
-        delta.put(fromState, deltaRow);
+        boolean fromStateBool = false;
+        boolean toStateBool = false;
+        boolean onSymbBool = false;
+        Object stateArray[] = states.toArray(); 
+        for(int i = 0; i < stateArray.length; i++){
+            if(((DFAState) stateArray[i]).getName().equals(fromState)){
+                fromStateBool = true;
+            }
+        }
+        for(int i = 0; i < stateArray.length; i++){
+            if(((DFAState) stateArray[i]).getName().equals(toState)){
+                toStateBool = true;
+            }
+        }
+        if(sigma.contains(onSymb)){
+            onSymbBool = true;
+        }
+        if(fromStateBool && toStateBool && onSymbBool == true){
+            HashMap<Character, String> deltaRow = new HashMap<Character, String>();
+            deltaRow.put(onSymb, toState);
+            delta.put(fromState, deltaRow);
+            return true;
+        }
         return false;
     }
 
