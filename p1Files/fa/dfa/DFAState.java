@@ -5,7 +5,7 @@ import fa.State;
 public class DFAState extends State {
 
     public  DFAState (){
-        super();
+        super("");
     }
     public DFAState(String name){
         super(name);
