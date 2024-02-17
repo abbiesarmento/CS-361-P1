@@ -227,8 +227,8 @@ public class DFA implements DFAInterface{
         states.forEach(state -> {
             builder.append(state);
             sigma.forEach(symbol -> {
-                String toState = delta.containsKey(state) && delta.get(state).containsKey(symbol)
-                        ? delta.get(state).get(symbol)
+                String toState = delta.containsKey(state.getName()) && delta.get(state.getName()).containsKey(symbol)
+                        ? delta.get(state.getName()).get(symbol)
                         : "";
                 builder.append("\t").append(toState);
             });
