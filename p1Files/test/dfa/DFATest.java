@@ -86,7 +86,7 @@ public class DFATest {
 				+ "F = { b }";
 		
 		assertTrue(dfaStr.replaceAll("\\s", "").equals(expStr.replaceAll("\\s", "")));
-		
+		System.out.println(dfaStr);
 		System.out.println("dfa1 toString pass");
 	}
 	
@@ -212,6 +212,7 @@ public class DFATest {
 				+ "q0 = 0\n"
 				+ "F={3}\n";
 		assertTrue(dfaStr.replaceAll("\\s", "").equals(expStr.replaceAll("\\s", "")));
+		System.out.println(dfaStr);
 		System.out.println("dfa2 toString pass");
 	}
 	
@@ -367,6 +368,7 @@ public void test3_4() {
 			+ "F = {G D}\n";
 	
 	assertTrue(dfaStr.replaceAll("\\s", "").equals(expStr.replaceAll("\\s", "")));
+	System.out.println(dfaStr);
 	System.out.println("dfa3 toString pass");
 }
 
@@ -500,6 +502,7 @@ public void test3_6() {
 				+ "F = {q2}\n";
 
 		assertTrue(dfaStr.replaceAll("\\s", "").equals(expStr.replaceAll("\\s", "")));
+		System.out.println(dfaStr);
 		System.out.println("dfa4 toString pass");
 	}
 
@@ -607,6 +610,7 @@ public void test3_6() {
 				+ "F = {q2}\n";
 
 		assertTrue(dfaStr.replaceAll("\\s", "").equals(expStr.replaceAll("\\s", "")));
+		System.out.println(dfaStr);
 		System.out.println("dfa5 toString pass");
 	}
 
@@ -763,6 +767,7 @@ public void test3_6() {
 				+ "F = {G D}\n";
 
 		assertTrue(dfaStr.replaceAll("\\s", "").equals(expStr.replaceAll("\\s", "")));
+		System.out.println(dfaStr);
 		System.out.println("dfa3 toString pass");
 	}
 
@@ -877,7 +882,7 @@ public void test3_6() {
 				+ "F = { 1 }";
 
 		assertTrue(dfaStr.replaceAll("\\s", "").equals(expStr.replaceAll("\\s", "")));
-
+		System.out.println(dfaStr);
 		System.out.println("dfa7 toString pass");
 	}
 
@@ -1018,6 +1023,7 @@ public void test3_6() {
 				+ "F = {q5}\n";
 
 		assertTrue(dfaStr.replaceAll("\\s", "").equals(expStr.replaceAll("\\s", "")));
+		System.out.println(dfaStr);
 		System.out.println("dfa4 toString pass");
 	}
 

@@ -4,21 +4,22 @@ import fa.State;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 public class DFA implements DFAInterface{
 
-    private HashSet<Character> sigma;
+    private LinkedHashSet<Character> sigma;
     private DFAState startState;
-    private HashSet<DFAState> finalState;
-    private HashSet<DFAState> states;
+    private LinkedHashSet<DFAState> finalState;
+    private LinkedHashSet<DFAState> states;
     private HashMap<String, HashMap<Character, String>> delta;
 
     public DFA (){
-        sigma = new HashSet<Character>();
+        sigma = new LinkedHashSet<Character>();
         startState = new DFAState();
-        finalState = new HashSet<DFAState>();
-        states = new HashSet<DFAState>();
+        finalState = new LinkedHashSet<DFAState>();
+        states = new LinkedHashSet<DFAState>();
         delta = new HashMap<String, HashMap<Character, String>>();
     }
 
