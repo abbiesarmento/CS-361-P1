@@ -167,4 +167,43 @@ public class DFA implements DFAInterface{
     public DFA swap(char symb1, char symb2) {
         return null;
     }
+
+    public String toString(){
+        StringBuilder builder = new StringBuilder();
+
+        // Append the set of states (Q)
+        builder.append("Q = { ");
+        states.forEach(state -> builder.append(state).append(" "));
+        builder.append("}\n");
+
+        // Append the alphabet (Sigma)
+        builder.append("Sigma = { ");
+        sigma.forEach(symbol -> builder.append(symbol).append(" "));
+        builder.append("}\n");
+
+        // Append the transition function (delta)
+        builder.append("delta =\n\t");
+        sigma.forEach(symbol -> builder.append("\t").append(symbol));
+        builder.append("\n");
+        states.forEach(state -> {
+            builder.append(state);
+            sigma.forEach(symbol -> {
+                String toState = delta.containsKey(state) && delta.get(state).containsKey(symbol)
+                        ? delta.get(state).get(symbol)
+                        : "";
+                builder.append("\t").append(toState);
+            });
+            builder.append("\n");
+        });
+
+        // Append the start state (q0)
+        builder.append("q0 = ").append(startState).append("\n");
+
+        // Append the set of final states (F)
+        builder.append("F = { ");
+        finalState.forEach(fState -> builder.append(fState).append(" "));
+        builder.append("}");
+
+        return builder.toString();
+    }
 }
