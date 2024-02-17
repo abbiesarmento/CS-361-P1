@@ -148,10 +148,11 @@ public class DFA implements DFAInterface{
 //            HashMap<Character, String> deltaRow = new HashMap<Character, String>();
 //            deltaRow.put(onSymb, toState);
 //            delta.put(fromState, deltaRow);
-//            System.out.println(delta);
 //            return true;
             delta.putIfAbsent(fromState, new HashMap<>());
             delta.get(fromState).put(onSymb, toState);
+                        System.out.println(delta);
+
             return true;
         }
         return false;
@@ -165,7 +166,45 @@ public class DFA implements DFAInterface{
 
     @Override
     public DFA swap(char symb1, char symb2) {
-        return null;
+        // Step 1: Create a new DFA instance
+        DFA newDFA = new DFA();
+
+        // Copy states and alphabet
+        for (State state : this.states) {
+            newDFA.addState(state.getName());
+        }
+        for (char symbol : this.sigma) {
+            newDFA.addSigma(symbol);
+        }
+
+        // Copy start and final states
+        newDFA.setStart(this.startState.getName());
+        for (DFAState finalState : this.finalState) {
+            newDFA.setFinal(finalState.getName());
+        }
+
+        // Step 2: Swap the transitions
+        for (HashMap.Entry<String, HashMap<Character, String>> entry : this.delta.entrySet()) {
+            String fromState = entry.getKey();
+            HashMap<Character, String> transitions = entry.getValue();
+            for (HashMap.Entry<Character, String> transition : transitions.entrySet()) {
+                char symbol = transition.getKey();
+                String toState = transition.getValue();
+
+                // Swap symbols if they match symb1 or symb2
+                if (symbol == symb1) {
+                    newDFA.addTransition(fromState, toState, symb2);
+                } else if (symbol == symb2) {
+                    newDFA.addTransition(fromState, toState, symb1);
+                } else {
+                    // If the symbol is neither symb1 nor symb2, copy it as is
+                    newDFA.addTransition(fromState, toState, symbol);
+                }
+            }
+        }
+
+        // Step 3: Return the new DFA
+        return newDFA;
     }
 
     public String toString(){
@@ -203,6 +242,7 @@ public class DFA implements DFAInterface{
         builder.append("F = { ");
         finalState.forEach(fState -> builder.append(fState).append(" "));
         builder.append("}");
+        System.out.println(builder.toString());
 
         return builder.toString();
     }
