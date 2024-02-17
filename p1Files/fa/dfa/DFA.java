@@ -161,7 +161,6 @@ public class DFA implements DFAInterface{
         if(fromStateBool && toStateBool && onSymbBool == true){      // if all are in their respective sets, updates delta using a hashmap who's key is the fromState
             delta.putIfAbsent(fromState, new HashMap<>());           // and who's value is another hashmap. That second hashmap uses the symbol as a key and toState as the value.
             delta.get(fromState).put(onSymb, toState);
-                        System.out.println(delta);
             return true;
         }
         return false;
@@ -245,7 +244,6 @@ public class DFA implements DFAInterface{
         builder.append("F = { ");
         finalState.forEach(fState -> builder.append(fState).append(" "));
         builder.append("}");
-        System.out.println(builder.toString());
 
         return builder.toString();
     }
