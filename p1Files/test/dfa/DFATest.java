@@ -606,8 +606,8 @@ public void test3_6() {
 				+ "start	a	start\n"
 				+ "a	a	ab\n"
 				+ "ab	a	ab\n"
-				+ "q0 = q0\n"
-				+ "F = {q2}\n";
+				+ "q0 = start\n"
+				+ "F = {ab}\n";
 
 		assertTrue(dfaStr.replaceAll("\\s", "").equals(expStr.replaceAll("\\s", "")));
 		System.out.println(dfaStr);
