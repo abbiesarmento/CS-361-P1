@@ -3,7 +3,6 @@ package fa.dfa;
 import fa.State;
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -27,12 +26,14 @@ public class DFA implements DFAInterface{
 
     @Override
     public boolean addState(String name) {
+        // creates array from the linked hash set, and loops to check the states to prevent duplicates
         Object stateArray[] = states.toArray(); 
         for(int i = 0; i < stateArray.length; i++){
             if(((DFAState) stateArray[i]).getName().equals(name)){
                 return false;
             }
         }
+        // adds state if it doesn't exist
         DFAState newState = new DFAState(name);
         states.add(newState);
         return true;
@@ -40,10 +41,12 @@ public class DFA implements DFAInterface{
 
     @Override
     public boolean setFinal(String name) {
+        // creates array from the linked hash set, and loops to check the state exists in states
         Object stateArray[] = states.toArray(); 
         for(int i = 0; i < stateArray.length; i++){
             if(((DFAState) stateArray[i]).getName().equals(name)){
                 DFAState newState = new DFAState(name);
+                 // adds state to finalStates if it is an existing state
                 finalState.add(newState);
                 return true;
             }
@@ -53,10 +56,12 @@ public class DFA implements DFAInterface{
 
     @Override
     public boolean setStart(String name) {
+        // creates array from the linked hash set, and loops to check the state exists in states
         Object stateArray[] = states.toArray(); 
         for(int i = 0; i < stateArray.length; i++){
             if(((DFAState) stateArray[i]).getName().equals(name)){
                 DFAState newState = new DFAState(name);
+                // sets the startState if it exists in the set
                 startState = newState;
                 return true;
             }
@@ -66,6 +71,7 @@ public class DFA implements DFAInterface{
 
     @Override
     public void addSigma(char symbol) {
+        // checks if the symbol already exists in sigma. Returns if it does to prevent duplicates
         if(sigma.contains(symbol)){
             return;
         }
@@ -97,9 +103,11 @@ public class DFA implements DFAInterface{
 
     @Override
     public State getState(String name) {
+        // creates array from the linked hash set, and loops to check the states and ensure the state we want is in the set.
         Object stateArray[] = states.toArray(); 
         for(int i = 0; i < stateArray.length; i++){
             if(((DFAState) stateArray[i]).getName().equals(name)){
+                // creates new state and returns it since you can't simply get objects from a set
                 DFAState state = new DFAState(name);
                 return state;
             }
@@ -109,6 +117,7 @@ public class DFA implements DFAInterface{
 
     @Override
     public boolean isFinal(String name) {
+        // creates array from the linked hash set, and loops to check the finalStates set and passes if it's in the set
         Object stateArray[] = finalState.toArray(); 
         for(int i = 0; i < stateArray.length; i++){
             if(((DFAState) stateArray[i]).getName().equals(name)){
@@ -120,6 +129,7 @@ public class DFA implements DFAInterface{
 
     @Override
     public boolean isStart(String name) {
+        // returns true if param is the start state
         if(startState.getName().equals(name)){
             return true;
         }
@@ -132,37 +142,29 @@ public class DFA implements DFAInterface{
         boolean toStateBool = false;
         boolean onSymbBool = false;
         Object stateArray[] = states.toArray();
+        // makes sure the fromState is in the states set
         for(int i = 0; i < stateArray.length; i++){
             if(((DFAState) stateArray[i]).getName().equals(fromState)){
                 fromStateBool = true;
             }
         }
+        // makes sure the toState is in the states set
         for(int i = 0; i < stateArray.length; i++){
             if(((DFAState) stateArray[i]).getName().equals(toState)){
                 toStateBool = true;
             }
         }
+        // makes sure the onSymb is in the sigma set
         if(sigma.contains(onSymb)){
             onSymbBool = true;
         }
-        if(fromStateBool && toStateBool && onSymbBool == true){
-//            HashMap<Character, String> deltaRow = new HashMap<Character, String>();
-//            deltaRow.put(onSymb, toState);
-//            delta.put(fromState, deltaRow);
-//            return true;
-            delta.putIfAbsent(fromState, new HashMap<>());
+        if(fromStateBool && toStateBool && onSymbBool == true){      // if all are in their respective sets, updates delta using a hashmap who's key is the fromState
+            delta.putIfAbsent(fromState, new HashMap<>());           // and who's value is another hashmap. That second hashmap uses the symbol as a key and toState as the value.
             delta.get(fromState).put(onSymb, toState);
                         System.out.println(delta);
-
             return true;
         }
         return false;
-//        if (!states.contains(fromState) || !states.contains(toState) || !sigma.contains(onSymb)) {
-//            return false;
-//        }
-//        delta.putIfAbsent(fromState, new HashMap<>());
-//        delta.get(fromState).put(onSymb, toState);
-//        return true;
     }
 
     @Override
